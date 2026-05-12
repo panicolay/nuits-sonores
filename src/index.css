@@ -524,6 +524,32 @@ ul {
   color: var(--fg);
 }
 
+.filter__description-text {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.filter__description-text.is-expanded {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+
+.filter__description-toggle {
+  margin-top: 0.5rem;
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.filter__description-toggle:hover {
+  text-decoration: underline;
+}
+
 .filter__count {
   color: var(--muted);
   margin: 0.75rem 0 1.5rem;

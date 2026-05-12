@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   getArtistsByFilter,
@@ -38,7 +39,7 @@ export function Filter() {
         {filterType === "genre" ? "Genre" : "Mood"}
       </p>
       <h1>{label}</h1>
-      {description && <p className="filter__description">{description}</p>}
+      {description && <GenreDescription text={description} />}
       <p className="filter__count">
         {upcoming.length} artiste{upcoming.length > 1 ? "s" : ""} à venir
       </p>
@@ -60,6 +61,44 @@ export function Filter() {
             </li>
           ))}
         </ul>
+      )}
+    </div>
+  );
+}
+
+function GenreDescription({ text }: { text: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [overflowing, setOverflowing] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current || expanded) return;
+    const el = ref.current;
+    const measure = () =>
+      setOverflowing(el.scrollHeight > el.clientHeight + 1);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [text, expanded]);
+
+  return (
+    <div className="filter__description">
+      <p
+        ref={ref}
+        className={`filter__description-text${expanded ? " is-expanded" : ""}`}
+      >
+        {text}
+      </p>
+      {(overflowing || expanded) && (
+        <button
+          type="button"
+          className="filter__description-toggle"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((v) => !v)}
+        >
+          {expanded ? "Afficher moins" : "Afficher plus"}
+        </button>
       )}
     </div>
   );
