@@ -1,9 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { getArtistBySlug, slugify } from "../data/programme";
+import { getArtistBySlug, getSetStatus, slugify } from "../data/programme";
+import { useNow } from "../data/now";
+import { SetBadge } from "../components/SetBadge";
 
 export function Artist() {
   const { slug } = useParams();
   const set = slug ? getArtistBySlug(slug) : undefined;
+  const now = useNow();
 
   if (!set) {
     return (
@@ -14,6 +17,8 @@ export function Artist() {
     );
   }
 
+  const status = getSetStatus(set, now);
+
   return (
     <article className="artist">
       <header>
@@ -21,6 +26,7 @@ export function Artist() {
         <p className="artist__meta">
           {set.jour} · {set.scene} · {set.debut}–{set.fin}
         </p>
+        <SetBadge status={status} />
       </header>
 
       <p className="artist__description">{set.description}</p>

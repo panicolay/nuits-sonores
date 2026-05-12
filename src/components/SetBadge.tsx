@@ -5,12 +5,15 @@ export function SetBadge({ status }: { status: SetStatus }) {
     return (
       <span className="badge badge--live">
         <span className="badge__dot" aria-hidden />
-        En direct
+        Live
       </span>
     );
   }
   if (status === "soon") {
-    return <span className="badge badge--soon">Bientôt</span>;
+    return <span className="badge badge--soon">Soon</span>;
+  }
+  if (status === "past") {
+    return <span className="badge badge--past">Terminé</span>;
   }
   return null;
 }
