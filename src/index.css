@@ -321,6 +321,11 @@ ul {
   color: #facc15;
 }
 
+.badge--past {
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
 .badge__dot {
   width: 0.5rem;
   height: 0.5rem;
@@ -395,7 +400,15 @@ ul {
 
 /* Artist */
 .artist > header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   margin-bottom: 1.5rem;
+}
+
+.artist > header .artist__meta {
+  margin: 0;
 }
 
 .artist__meta {
