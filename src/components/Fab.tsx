@@ -6,8 +6,8 @@ type FabItem = { to: string; label: string };
 
 const SECTIONS: FabItem[][] = [
   [
-    { to: "/jour/day-2", label: "Jour 2" },
-    { to: "/jour/day-3", label: "Jour 3" },
+    { to: "/jour/day-2", label: "Jeudi" },
+    { to: "/jour/day-3", label: "Vendredi" },
   ],
   scenes.map((s) => ({ to: `/scene/${s.slug}`, label: s.value })),
   [

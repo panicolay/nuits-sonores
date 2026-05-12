@@ -26,9 +26,10 @@ function dayIdFromLabel(label: string): DayId {
 }
 
 function frenchWeekday(isoDate: string): string {
-  return new Date(`${isoDate}T00:00:00`).toLocaleDateString("fr-FR", {
+  const weekday = new Date(`${isoDate}T00:00:00`).toLocaleDateString("fr-FR", {
     weekday: "long",
   });
+  return weekday.charAt(0).toUpperCase() + weekday.slice(1);
 }
 
 export const days: Day[] = (() => {
@@ -38,11 +39,10 @@ export const days: Day[] = (() => {
     groups.get(set.jour)!.push(set);
   }
   return [...groups.entries()].map(([rawLabel, sets]) => {
-    const base = rawLabel.replace(/^Day\s+/i, "Jour ");
     const date = sets[0].date;
     return {
       id: dayIdFromLabel(rawLabel),
-      label: `${base} (${frenchWeekday(date)})`,
+      label: frenchWeekday(date),
       date,
       sets: sets.slice().sort((a, b) => a.debut.localeCompare(b.debut)),
     };
@@ -55,6 +55,33 @@ export function getDay(id: string): Day | undefined {
 
 export function getArtistBySlug(slug: string): ArtistSet | undefined {
   return programme.find((s) => slugify(s.artiste) === slug);
+}
+
+export type SetStatus = "past" | "live" | "soon" | "future";
+
+const SOON_MS = 30 * 60 * 1000;
+
+export function setStart(set: ArtistSet): Date {
+  return new Date(`${set.date}T${set.debut}:00`);
+}
+
+export function setEnd(set: ArtistSet): Date {
+  const start = setStart(set);
+  const end = new Date(`${set.date}T${set.fin}:00`);
+  if (end.getTime() <= start.getTime()) {
+    end.setDate(end.getDate() + 1);
+  }
+  return end;
+}
+
+export function getSetStatus(set: ArtistSet, now: Date): SetStatus {
+  const start = setStart(set).getTime();
+  const end = setEnd(set).getTime();
+  const t = now.getTime();
+  if (t >= end) return "past";
+  if (t >= start) return "live";
+  if (start - t <= SOON_MS) return "soon";
+  return "future";
 }
 
 export const scenes: { value: string; slug: string }[] = SCENES.filter((s) =>

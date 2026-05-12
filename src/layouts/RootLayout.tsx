@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Fab } from "../components/Fab";
+import { DebugPanel } from "../components/DebugPanel";
 
 export function RootLayout() {
   return (
@@ -10,6 +11,7 @@ export function RootLayout() {
         <Outlet />
       </main>
       <Fab />
+      <DebugPanel />
     </div>
   );
 }
