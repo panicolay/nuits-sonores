@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { days } from "../data/programme";
+import { days, scenes } from "../data/programme";
 
 export function Home() {
   return (
@@ -10,6 +10,17 @@ export function Home() {
           {days.map((day) => (
             <li key={day.id}>
               <Link to={`/jour/${day.id}`}>{day.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="home__section">
+        <h2>Scène</h2>
+        <ul className="home__list">
+          {scenes.map((scene) => (
+            <li key={scene.slug}>
+              <Link to={`/scene/${scene.slug}`}>{scene.value}</Link>
             </li>
           ))}
         </ul>

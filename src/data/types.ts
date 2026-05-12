@@ -1,4 +1,3 @@
-export type Scene = "Nef" | "Soundsystem" | "Outdoor" | "Darse";
 export type DayId = "day-2" | "day-3";
 
 export type ArtistSet = {
@@ -21,6 +20,19 @@ export type Day = {
   label: string;
   date: string;
   sets: ArtistSet[];
+};
+
+export type SceneDay = {
+  dayId: DayId;
+  label: string;
+  date: string;
+  sets: ArtistSet[];
+};
+
+export type Scene = {
+  value: string;
+  slug: string;
+  days: SceneDay[];
 };
 
 export type FilterCount = {

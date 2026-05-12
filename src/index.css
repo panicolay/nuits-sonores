@@ -179,8 +179,18 @@ ul {
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55);
 }
 
+.fab__section {
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 0;
+}
+
+.fab__section + .fab__section {
+  border-top: 1px solid var(--border);
+}
+
 .fab__link {
-  padding: 0.75rem 0.875rem;
+  padding: 0.625rem 0.875rem;
   border-radius: 8px;
   color: var(--fg);
   font-size: 1rem;
@@ -263,6 +273,50 @@ ul {
 
 .day__artist {
   grid-area: artist;
+  font-weight: 600;
+}
+
+/* Scene */
+.scene__day {
+  margin: 1.5rem 0 0;
+}
+
+.scene__day:first-of-type {
+  margin-top: 1.25rem;
+}
+
+.scene__day h2 {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.scene__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.scene__list a {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  align-items: center;
+  gap: 0.25rem 0.875rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.scene__time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.scene__artist {
   font-weight: 600;
 }
 

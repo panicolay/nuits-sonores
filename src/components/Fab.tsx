@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { scenes } from "../data/programme";
 
-const ITEMS = [
-  { to: "/jour/day-2", label: "Jour 2" },
-  { to: "/jour/day-3", label: "Jour 3" },
-  { to: "/decouvrir/moods", label: "Moods" },
-  { to: "/decouvrir/genres", label: "Genres" },
+type FabItem = { to: string; label: string };
+
+const SECTIONS: FabItem[][] = [
+  [
+    { to: "/jour/day-2", label: "Jour 2" },
+    { to: "/jour/day-3", label: "Jour 3" },
+  ],
+  scenes.map((s) => ({ to: `/scene/${s.slug}`, label: s.value })),
+  [
+    { to: "/decouvrir/moods", label: "Moods" },
+    { to: "/decouvrir/genres", label: "Genres" },
+  ],
 ];
 
 export function Fab() {
@@ -30,10 +38,14 @@ export function Fab() {
       )}
       {open && (
         <nav className="fab__menu" aria-label="Navigation principale">
-          {ITEMS.map((item) => (
-            <NavLink key={item.to} to={item.to} className="fab__link">
-              {item.label}
-            </NavLink>
+          {SECTIONS.map((items, i) => (
+            <div key={i} className="fab__section">
+              {items.map((item) => (
+                <NavLink key={item.to} to={item.to} className="fab__link">
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
           ))}
         </nav>
       )}

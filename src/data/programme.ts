@@ -1,5 +1,12 @@
 import raw from "../../programme.json";
-import type { ArtistSet, Day, DayId, FilterCount } from "./types";
+import type {
+  ArtistSet,
+  Day,
+  DayId,
+  FilterCount,
+  Scene,
+  SceneDay,
+} from "./types";
 
 export const programme: ArtistSet[] = raw as ArtistSet[];
 
@@ -48,6 +55,36 @@ export function getDay(id: string): Day | undefined {
 
 export function getArtistBySlug(slug: string): ArtistSet | undefined {
   return programme.find((s) => slugify(s.artiste) === slug);
+}
+
+export const scenes: { value: string; slug: string }[] = SCENES.filter((s) =>
+  programme.some((set) => set.scene === s),
+).map((s) => ({ value: s, slug: slugify(s) }));
+
+export function getScene(slug: string): Scene | undefined {
+  const value = SCENES.find((s) => slugify(s) === slug);
+  if (!value) return undefined;
+
+  const groups = new Map<string, ArtistSet[]>();
+  for (const set of programme) {
+    if (set.scene !== value) continue;
+    if (!groups.has(set.jour)) groups.set(set.jour, []);
+    groups.get(set.jour)!.push(set);
+  }
+
+  const sceneDays: SceneDay[] = [...groups.entries()]
+    .map(([rawLabel, daySets]) => {
+      const day = days.find((d) => d.id === dayIdFromLabel(rawLabel));
+      return {
+        dayId: dayIdFromLabel(rawLabel),
+        label: day?.label ?? rawLabel,
+        date: daySets[0].date,
+        sets: daySets.slice().sort((a, b) => a.debut.localeCompare(b.debut)),
+      };
+    })
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  return { value, slug, days: sceneDays };
 }
 
 function countValues(picker: (set: ArtistSet) => string[]): FilterCount[] {
