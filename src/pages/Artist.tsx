@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { getArtistBySlug, getSetStatus, slugify } from "../data/programme";
+import { days, getArtistBySlug, getSetStatus, slugify } from "../data/programme";
 import { useNow } from "../data/now";
 import { SetBadge } from "../components/SetBadge";
 
@@ -18,13 +18,20 @@ export function Artist() {
   }
 
   const status = getSetStatus(set, now);
+  const day = days.find((d) => d.date === set.date)!;
 
   return (
     <article className="artist">
       <header>
         <h1>{set.artiste}</h1>
         <p className="artist__meta">
-          {set.jour} · {set.scene} · {set.debut}–{set.fin}
+          <Link to={`/jour/${day.id}`} className="artist__meta-link">
+            {day.label} {set.debut}–{set.fin}
+          </Link>
+          <span className="artist__meta-sep" aria-hidden> / </span>
+          <Link to={`/scene/${slugify(set.scene)}`} className="artist__meta-link">
+            {set.scene}
+          </Link>
         </p>
         <SetBadge status={status} />
       </header>
