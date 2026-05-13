@@ -418,7 +418,50 @@ ul {
 }
 
 .artist__description {
+  margin: 0 0 1.25rem;
+}
+
+.artist__pick {
+  display: flex;
+  gap: 0.75rem;
   margin: 0 0 2rem;
+  padding: 0.875rem 1rem;
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+.artist__pick-mark {
+  color: var(--accent);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.artist__pick-body {
+  min-width: 0;
+}
+
+.artist__pick-label {
+  margin: 0 0 0.25rem;
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.artist__pick-text {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+/* Pick mark (inline) */
+.pick-mark {
+  display: inline-block;
+  margin-left: 0.375rem;
+  color: var(--accent);
+  font-size: 0.875em;
+  vertical-align: baseline;
 }
 
 .artist section {

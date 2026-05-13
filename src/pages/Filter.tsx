@@ -9,6 +9,7 @@ import {
 import { getGenreDescription } from "../data/genres";
 import { useNow } from "../data/now";
 import { SetBadge } from "../components/SetBadge";
+import { PickMark } from "../components/PickMark";
 import type { FilterType } from "../data/types";
 
 export function Filter() {
@@ -51,7 +52,10 @@ export function Filter() {
             <li key={set.artiste}>
               <Link to={`/artiste/${slugify(set.artiste)}`}>
                 <span className="filter__main">
-                  <span className="filter__name">{set.artiste}</span>
+                  <span className="filter__name">
+                    {set.artiste}
+                    {set.incontournable && <PickMark />}
+                  </span>
                   <SetBadge status={status} />
                 </span>
                 <span className="filter__meta">

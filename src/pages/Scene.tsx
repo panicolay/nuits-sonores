@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { getScene, getSetStatus, slugify } from "../data/programme";
 import { useNow } from "../data/now";
 import { SetBadge } from "../components/SetBadge";
+import { PickMark } from "../components/PickMark";
 
 export function Scene() {
   const { slug } = useParams();
@@ -40,7 +41,10 @@ export function Scene() {
                     {set.debut}–{set.fin}
                   </span>
                   <span className="scene__artist">
-                    <span className="scene__name">{set.artiste}</span>
+                    <span className="scene__name">
+                      {set.artiste}
+                      {set.incontournable && <PickMark />}
+                    </span>
                     <SetBadge status={status} />
                   </span>
                 </Link>
