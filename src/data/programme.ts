@@ -114,9 +114,13 @@ export function getScene(slug: string): Scene | undefined {
   return { value, slug, days: sceneDays };
 }
 
-function countValues(picker: (set: ArtistSet) => string[]): FilterCount[] {
+function countValues(
+  picker: (set: ArtistSet) => string[],
+  include: (set: ArtistSet) => boolean = () => true,
+): FilterCount[] {
   const counts = new Map<string, number>();
   for (const set of programme) {
+    if (!include(set)) continue;
     for (const v of picker(set)) {
       counts.set(v, (counts.get(v) ?? 0) + 1);
     }
@@ -128,6 +132,20 @@ function countValues(picker: (set: ArtistSet) => string[]): FilterCount[] {
 
 export const allGenres: FilterCount[] = countValues((s) => s.genres);
 export const allMoods: FilterCount[] = countValues((s) => s.moods);
+
+export function getUpcomingGenres(now: Date): FilterCount[] {
+  return countValues(
+    (s) => s.genres,
+    (s) => getSetStatus(s, now) !== "past",
+  );
+}
+
+export function getUpcomingMoods(now: Date): FilterCount[] {
+  return countValues(
+    (s) => s.moods,
+    (s) => getSetStatus(s, now) !== "past",
+  );
+}
 
 const GENRE_GROUPS: { label: string; genres: string[] }[] = [
   {
@@ -205,8 +223,8 @@ const GENRE_GROUPS: { label: string; genres: string[] }[] = [
 
 export type GenreGroup = { label: string; items: FilterCount[] };
 
-export const genresByGroup: GenreGroup[] = (() => {
-  const byValue = new Map(allGenres.map((g) => [g.value, g]));
+function groupGenres(counts: FilterCount[]): GenreGroup[] {
+  const byValue = new Map(counts.map((g) => [g.value, g]));
   const claimed = new Set<string>();
   const groups: GenreGroup[] = GENRE_GROUPS.map(({ label, genres }) => {
     const items: FilterCount[] = [];
@@ -220,12 +238,16 @@ export const genresByGroup: GenreGroup[] = (() => {
     return { label, items };
   }).filter((g) => g.items.length > 0);
 
-  const orphans = allGenres.filter((g) => !claimed.has(g.value));
+  const orphans = counts.filter((g) => !claimed.has(g.value));
   if (orphans.length > 0) {
     groups.push({ label: "Autres", items: orphans });
   }
   return groups;
-})();
+}
+
+export function getUpcomingGenresByGroup(now: Date): GenreGroup[] {
+  return groupGenres(getUpcomingGenres(now));
+}
 
 export function getArtistsByFilter(
   type: "genre" | "mood",
