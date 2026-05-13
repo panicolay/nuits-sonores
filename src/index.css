@@ -215,6 +215,7 @@ ul {
 }
 
 .day__list a {
+  position: relative;
   display: grid;
   grid-template-columns: 5.5rem 1fr;
   grid-template-areas:
@@ -222,9 +223,31 @@ ul {
     "scene artist";
   align-items: start;
   gap: 0.25rem 0.875rem;
-  padding: 0.875rem 1rem;
+  padding: 0.875rem 2.25rem 0.875rem 1rem;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.day__list a::after {
+  content: "›";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.day__list a:active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.day__list a:active::after {
+  color: var(--accent);
 }
 
 .day__time {
@@ -370,13 +393,36 @@ ul {
 }
 
 .scene__list a {
+  position: relative;
   display: grid;
   grid-template-columns: 5.5rem 1fr;
   align-items: start;
   gap: 0.25rem 0.875rem;
-  padding: 0.875rem 1rem;
+  padding: 0.875rem 2.25rem 0.875rem 1rem;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.scene__list a::after {
+  content: "›";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.scene__list a:active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.scene__list a:active::after {
+  color: var(--accent);
 }
 
 .scene__time {
@@ -606,13 +652,36 @@ ul {
 }
 
 .filter__list a {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding: 0.875rem 1rem;
+  padding: 0.875rem 2.25rem 0.875rem 1rem;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.filter__list a::after {
+  content: "›";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.filter__list a:active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.filter__list a:active::after {
+  color: var(--accent);
 }
 
 .filter__main {
