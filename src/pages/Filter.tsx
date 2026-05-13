@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-  getArtistsByFilter,
+  getFilterDays,
   getFilterLabel,
   getSetStatus,
   slugify,
@@ -22,17 +22,24 @@ export function Filter() {
   }
 
   const label = slug ? getFilterLabel(filterType, slug) : undefined;
-  const artists = slug ? getArtistsByFilter(filterType, slug) : [];
+  const rawDays = slug ? getFilterDays(filterType, slug) : [];
   const description =
     filterType === "genre" && slug ? getGenreDescription(slug) : undefined;
 
-  if (!label || artists.length === 0) {
+  if (!label || rawDays.length === 0) {
     return <NotMatched />;
   }
 
-  const upcoming = artists
-    .map((set) => ({ set, status: getSetStatus(set, now) }))
-    .filter((entry) => entry.status !== "past");
+  const days = rawDays
+    .map((day) => ({
+      ...day,
+      sets: day.sets
+        .map((set) => ({ set, status: getSetStatus(set, now) }))
+        .filter((entry) => entry.status !== "past"),
+    }))
+    .filter((day) => day.sets.length > 0);
+
+  const upcomingCount = days.reduce((sum, d) => sum + d.sets.length, 0);
 
   return (
     <div className="filter">
@@ -42,29 +49,35 @@ export function Filter() {
       <h1>{label}</h1>
       {description && <GenreDescription text={description} />}
       <p className="filter__count">
-        {upcoming.length} artiste{upcoming.length > 1 ? "s" : ""} à venir
+        {upcomingCount} artiste{upcomingCount > 1 ? "s" : ""} à venir
       </p>
-      {upcoming.length === 0 ? (
+      {upcomingCount === 0 ? (
         <p className="filter__empty">Tous les sets sont terminés.</p>
       ) : (
-        <ul className="filter__list">
-          {upcoming.map(({ set, status }) => (
-            <li key={set.artiste}>
-              <Link to={`/artiste/${slugify(set.artiste)}`}>
-                <span className="filter__main">
-                  <span className="filter__name">
-                    {set.artiste}
-                    {set.incontournable && <PickMark />}
-                  </span>
-                  <SetBadge status={status} />
-                </span>
-                <span className="filter__meta">
-                  {set.jour} · {set.scene}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        days.map((day) => (
+          <section key={day.dayId} className="filter__day">
+            <h2>{day.label}</h2>
+            <ul className="filter__list">
+              {day.sets.map(({ set, status }) => (
+                <li key={set.artiste}>
+                  <Link to={`/artiste/${slugify(set.artiste)}`}>
+                    <span className="filter__time">
+                      {set.debut}–{set.fin}
+                    </span>
+                    <span className="filter__scene">{set.scene}</span>
+                    <span className="filter__artist">
+                      <span className="filter__name">
+                        {set.artiste}
+                        {set.incontournable && <PickMark />}
+                      </span>
+                      <SetBadge status={status} />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
       )}
     </div>
   );
