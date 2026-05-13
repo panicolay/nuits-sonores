@@ -206,107 +206,115 @@ ul {
   font-weight: 600;
 }
 
-/* Day */
-.day__list {
-  margin-top: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+/* Day timetable */
+.day h1 {
+  margin-bottom: 1rem;
 }
 
-.day__list a {
+.timetable {
+  --gutter: 2.25rem;
+  --col-gap: 0.25rem;
+  --row-h: 2px;
+}
+
+.timetable__head,
+.timetable__body {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  grid-template-areas:
-    "time artist"
-    "scene artist";
-  align-items: start;
-  gap: 0 0.875rem;
-  padding: 0.875rem 1rem;
+  grid-template-columns: var(--gutter) repeat(4, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+.timetable__head {
+  position: sticky;
+  top: 3.25rem;
+  z-index: 5;
+  background: var(--bg);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.timetable__scene-head {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-align: center;
+  align-self: center;
+}
+
+.timetable__body {
+  position: relative;
+  grid-auto-rows: var(--row-h);
+  padding-top: 0.5rem;
+}
+
+.timetable__hour-label {
+  grid-column: 1;
+  font-size: 0.6875rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  align-self: start;
+  transform: translateY(-50%);
+  padding-right: 0.375rem;
+  text-align: right;
+}
+
+.timetable__hour-line {
+  grid-column: 2 / -1;
+  align-self: start;
+  height: 0;
+  border-top: 1px dashed var(--border);
+  pointer-events: none;
+}
+
+.timetable__slot {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
+  padding: 0.5rem 0.625rem;
+  margin: 1px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow: hidden;
+  color: var(--fg);
   transition: background 0.12s ease, border-color 0.12s ease;
 }
 
-.day__list a:active {
+.timetable__slot:active {
   background: var(--accent-soft);
   border-color: var(--accent);
 }
 
-.day__list a:active .day__artist {
-  border-left-color: var(--accent);
-}
-
-.day__time {
-  grid-area: time;
-  font-variant-numeric: tabular-nums;
-  font-size: 0.875rem;
-  line-height: 1.5rem;
-  color: var(--muted);
-}
-
-.day__scene {
-  grid-area: scene;
-  font-size: 0.6875rem;
-  line-height: 1.5rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.day__artist {
-  grid-area: artist;
-  border-left: 1px solid var(--border);
-  padding-left: 0.875rem;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
-
-.day__name {
+.timetable__name {
   font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
-.day__item--past {
+.timetable__time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.timetable__slot--past {
   opacity: 0.45;
 }
 
-.day__past {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+.timetable__slot--live {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
-.day__past[open] {
-  margin-bottom: 0.5rem;
+.timetable__slot--soon {
+  border-color: rgba(234, 179, 8, 0.5);
 }
 
-.day__past > summary {
-  cursor: pointer;
-  color: var(--muted);
-  font-size: 0.875rem;
-  padding: 0.5rem 0;
-  list-style: none;
-}
-
-.day__past > summary::-webkit-details-marker {
-  display: none;
-}
-
-.day__past > summary::before {
-  content: "▸";
-  display: inline-block;
-  margin-right: 0.5rem;
-  transition: transform 0.15s;
-}
-
-.day__past[open] > summary::before {
-  transform: rotate(90deg);
-}
-
-.day__past .day__list {
-  margin-top: 0.5rem;
+.timetable__slot .badge {
+  margin-top: 0.125rem;
 }
 
 /* Badges */
