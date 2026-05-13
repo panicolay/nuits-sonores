@@ -34,10 +34,7 @@ export function Artist() {
       {set.incontournable && (
         <aside className="artist__pick" aria-label="Incontournable">
           <span className="artist__pick-mark" aria-hidden>※</span>
-          <div className="artist__pick-body">
-            <p className="artist__pick-label">À ne pas manquer</p>
-            <p className="artist__pick-text">{set.incontournable}</p>
-          </div>
+          <p className="artist__pick-text">{set.incontournable}</p>
         </aside>
       )}
 
