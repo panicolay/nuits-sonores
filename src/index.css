@@ -215,7 +215,6 @@ ul {
 }
 
 .day__list a {
-  position: relative;
   display: grid;
   grid-template-columns: 5.5rem 1fr;
   grid-template-areas:
@@ -223,22 +222,11 @@ ul {
     "scene artist";
   align-items: start;
   gap: 0.25rem 0.875rem;
-  padding: 0.875rem 2.25rem 0.875rem 1rem;
+  padding: 0.875rem 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   transition: background 0.12s ease, border-color 0.12s ease;
-}
-
-.day__list a::after {
-  content: "›";
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 1.25rem;
-  line-height: 1;
 }
 
 .day__list a:active {
@@ -246,20 +234,22 @@ ul {
   border-color: var(--accent);
 }
 
-.day__list a:active::after {
-  color: var(--accent);
+.day__list a:active .day__artist {
+  border-left-color: var(--accent);
 }
 
 .day__time {
   grid-area: time;
   font-variant-numeric: tabular-nums;
   font-size: 0.875rem;
+  line-height: 1.5rem;
   color: var(--muted);
 }
 
 .day__scene {
   grid-area: scene;
   font-size: 0.6875rem;
+  line-height: 1.5rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -393,27 +383,15 @@ ul {
 }
 
 .scene__list a {
-  position: relative;
   display: grid;
   grid-template-columns: 5.5rem 1fr;
   align-items: start;
   gap: 0.25rem 0.875rem;
-  padding: 0.875rem 2.25rem 0.875rem 1rem;
+  padding: 0.875rem 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   transition: background 0.12s ease, border-color 0.12s ease;
-}
-
-.scene__list a::after {
-  content: "›";
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 1.25rem;
-  line-height: 1;
 }
 
 .scene__list a:active {
@@ -421,13 +399,14 @@ ul {
   border-color: var(--accent);
 }
 
-.scene__list a:active::after {
-  color: var(--accent);
+.scene__list a:active .scene__artist {
+  border-left-color: var(--accent);
 }
 
 .scene__time {
   font-variant-numeric: tabular-nums;
   font-size: 0.875rem;
+  line-height: 1.5rem;
   color: var(--muted);
 }
 
@@ -645,6 +624,23 @@ ul {
   font-size: 0.875rem;
 }
 
+.filter__day {
+  margin: 1.5rem 0 0;
+}
+
+.filter__day:first-of-type {
+  margin-top: 1.25rem;
+}
+
+.filter__day h2 {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 .filter__list {
   display: flex;
   flex-direction: column;
@@ -652,27 +648,18 @@ ul {
 }
 
 .filter__list a {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.875rem 2.25rem 0.875rem 1rem;
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  grid-template-areas:
+    "time artist"
+    "scene artist";
+  align-items: start;
+  gap: 0.25rem 0.875rem;
+  padding: 0.875rem 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   transition: background 0.12s ease, border-color 0.12s ease;
-}
-
-.filter__list a::after {
-  content: "›";
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 1.25rem;
-  line-height: 1;
 }
 
 .filter__list a:active {
@@ -680,25 +667,39 @@ ul {
   border-color: var(--accent);
 }
 
-.filter__list a:active::after {
-  color: var(--accent);
+.filter__list a:active .filter__artist {
+  border-left-color: var(--accent);
 }
 
-.filter__main {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
+.filter__time {
+  grid-area: time;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: var(--muted);
+}
+
+.filter__scene {
+  grid-area: scene;
+  font-size: 0.6875rem;
+  line-height: 1.5rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.filter__artist {
+  grid-area: artist;
+  border-left: 1px solid var(--border);
+  padding-left: 0.875rem;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
 }
 
 .filter__name {
   font-weight: 600;
-}
-
-.filter__meta {
-  color: var(--muted);
-  font-size: 0.75rem;
-  white-space: nowrap;
 }
 
 .filter__empty {

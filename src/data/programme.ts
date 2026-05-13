@@ -257,6 +257,29 @@ export function getArtistsByFilter(
   return programme.filter((s) => s[key].some((v) => slugify(v) === slug));
 }
 
+export function getFilterDays(
+  type: "genre" | "mood",
+  slug: string,
+): SceneDay[] {
+  const sets = getArtistsByFilter(type, slug);
+  const groups = new Map<string, ArtistSet[]>();
+  for (const set of sets) {
+    if (!groups.has(set.jour)) groups.set(set.jour, []);
+    groups.get(set.jour)!.push(set);
+  }
+  return [...groups.entries()]
+    .map(([rawLabel, daySets]) => {
+      const day = days.find((d) => d.id === dayIdFromLabel(rawLabel));
+      return {
+        dayId: dayIdFromLabel(rawLabel),
+        label: day?.label ?? rawLabel,
+        date: daySets[0].date,
+        sets: daySets.slice().sort((a, b) => a.debut.localeCompare(b.debut)),
+      };
+    })
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
 export function getFilterLabel(
   type: "genre" | "mood",
   slug: string,
