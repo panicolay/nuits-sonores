@@ -11,6 +11,7 @@ export type ArtistSet = {
   artistes_lies: string[];
   genres: string[];
   moods: string[];
+  incontournable?: string;
 };
 
 export type FilterType = "genre" | "mood";

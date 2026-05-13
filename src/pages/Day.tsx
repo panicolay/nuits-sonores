@@ -8,6 +8,7 @@ import {
 } from "../data/programme";
 import { useNow } from "../data/now";
 import { SetBadge } from "../components/SetBadge";
+import { PickMark } from "../components/PickMark";
 
 type Entry = { set: ArtistSet; status: SetStatus };
 
@@ -20,7 +21,10 @@ function SetItem({ set, status }: Entry) {
         </span>
         <span className="day__scene">{set.scene}</span>
         <span className="day__artist">
-          <span className="day__name">{set.artiste}</span>
+          <span className="day__name">
+            {set.artiste}
+            {set.incontournable && <PickMark />}
+          </span>
           <SetBadge status={status} />
         </span>
       </Link>

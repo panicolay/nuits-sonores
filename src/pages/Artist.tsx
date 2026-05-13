@@ -31,6 +31,16 @@ export function Artist() {
 
       <p className="artist__description">{set.description}</p>
 
+      {set.incontournable && (
+        <aside className="artist__pick" aria-label="Incontournable">
+          <span className="artist__pick-mark" aria-hidden>※</span>
+          <div className="artist__pick-body">
+            <p className="artist__pick-label">À ne pas manquer</p>
+            <p className="artist__pick-text">{set.incontournable}</p>
+          </div>
+        </aside>
+      )}
+
       <section>
         <h2>Genres</h2>
         <ul className="artist__chips">
