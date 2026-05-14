@@ -1,9 +1,9 @@
 import { Smiley } from "@phosphor-icons/react";
 
-export function PickMark() {
+export function PickMark({ size = 12 }: { size?: number }) {
   return (
     <Smiley
-      size={12}
+      size={size}
       weight="regular"
       color="var(--accent)"
       className="pick-mark"
