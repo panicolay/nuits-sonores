@@ -1,13 +1,16 @@
 import { Link, useParams } from "react-router-dom";
 import { getScene, getSetStatus, slugify } from "../data/programme";
 import { useNow } from "../data/now";
+import { useFavorites } from "../data/favorites";
 import { SetBadge } from "../components/SetBadge";
 import { PickMark } from "../components/PickMark";
+import { FavoriteMark } from "../components/FavoriteMark";
 
 export function Scene() {
   const { slug } = useParams();
   const scene = slug ? getScene(slug) : undefined;
   const now = useNow();
+  const favorites = useFavorites();
 
   if (!scene) {
     return (
@@ -44,6 +47,7 @@ export function Scene() {
                     <span className="scene__name">
                       {set.artiste}
                       {set.incontournable && <PickMark />}
+                      {favorites.has(slugify(set.artiste)) && <FavoriteMark />}
                     </span>
                     <SetBadge status={status} />
                   </span>
