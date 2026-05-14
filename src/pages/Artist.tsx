@@ -1,8 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import { Heart, Smiley } from "@phosphor-icons/react";
+import { CalendarPlus, Heart, Smiley } from "@phosphor-icons/react";
 import { days, getArtistBySlug, getSetStatus, slugify } from "../data/programme";
 import { useNow } from "../data/now";
 import { toggleFavorite, useFavorites } from "../data/favorites";
+import { downloadICS } from "../data/calendar";
 import { SetBadge } from "../components/SetBadge";
 
 export function Artist() {
@@ -43,21 +44,38 @@ export function Artist() {
 
       <p className="artist__description">{set.description}</p>
 
-      <button
-        type="button"
-        className={`artist__favorite${fav ? " is-on" : ""}`}
-        onClick={() => toggleFavorite(artistSlug)}
-        aria-pressed={fav}
-        aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
-      >
-        <Heart
-          size={18}
-          weight={fav ? "fill" : "regular"}
-          color="var(--accent-pink)"
-          aria-hidden
-        />
-        <span>{fav ? "Favori" : "Ajouter aux favoris"}</span>
-      </button>
+      <div className="artist__actions">
+        <button
+          type="button"
+          className={`artist__favorite${fav ? " is-on" : ""}`}
+          onClick={() => toggleFavorite(artistSlug)}
+          aria-pressed={fav}
+          aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
+        >
+          <Heart
+            size={18}
+            weight={fav ? "fill" : "regular"}
+            color="var(--accent-pink)"
+            aria-hidden
+          />
+          <span>{fav ? "Favori" : "Ajouter aux favoris"}</span>
+        </button>
+
+        <button
+          type="button"
+          className="artist__calendar"
+          onClick={() => downloadICS(set)}
+          aria-label="Ajouter au calendrier"
+        >
+          <CalendarPlus
+            size={18}
+            weight="regular"
+            color="var(--accent)"
+            aria-hidden
+          />
+          <span>Ajouter au calendrier</span>
+        </button>
+      </div>
 
       {set.incontournable && (
         <aside className="artist__pick" aria-label="Incontournable">
