@@ -38,27 +38,26 @@ export function Artist() {
             {set.scene}
           </Link>
         </p>
-        <div className="artist__actions">
-          <SetBadge status={status} />
-          <button
-            type="button"
-            className={`artist__favorite${fav ? " is-on" : ""}`}
-            onClick={() => toggleFavorite(artistSlug)}
-            aria-pressed={fav}
-            aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
-          >
-            <Heart
-              size={18}
-              weight={fav ? "fill" : "regular"}
-              color="var(--accent-pink)"
-              aria-hidden
-            />
-            <span>{fav ? "Favori" : "Ajouter aux favoris"}</span>
-          </button>
-        </div>
+        <SetBadge status={status} />
       </header>
 
       <p className="artist__description">{set.description}</p>
+
+      <button
+        type="button"
+        className={`artist__favorite${fav ? " is-on" : ""}`}
+        onClick={() => toggleFavorite(artistSlug)}
+        aria-pressed={fav}
+        aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
+      >
+        <Heart
+          size={18}
+          weight={fav ? "fill" : "regular"}
+          color="var(--accent-pink)"
+          aria-hidden
+        />
+        <span>{fav ? "Favori" : "Ajouter aux favoris"}</span>
+      </button>
 
       {set.incontournable && (
         <aside className="artist__pick" aria-label="Incontournable">
