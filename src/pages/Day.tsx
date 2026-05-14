@@ -4,21 +4,20 @@ import type { ArtistSet } from "../data/types";
 import {
   SCENES,
   getDay,
-  getSetStatus,
   setEnd,
   setStart,
   slugify,
-  type SetStatus,
 } from "../data/programme";
 import { useNow } from "../data/now";
-import { SetBadge } from "../components/SetBadge";
 import { PickMark } from "../components/PickMark";
 
 const MS_PER_MIN = 60_000;
 
+type SlotState = "past" | "live" | "future";
+
 type Slot = {
   set: ArtistSet;
-  status: SetStatus;
+  state: SlotState;
   column: number;
   startRow: number;
   endRow: number;
@@ -46,10 +45,10 @@ function buildHourMarks(startMs: number, endMs: number): HourMark[] {
 }
 
 function SlotCard({ slot }: { slot: Slot }) {
-  const { set, status, column, startRow, endRow } = slot;
+  const { set, state, column, startRow, endRow } = slot;
   const className = [
     "timetable__slot",
-    `timetable__slot--${status}`,
+    `timetable__slot--${state}`,
     set.incontournable ? "timetable__slot--pick" : "",
   ]
     .filter(Boolean)
@@ -67,7 +66,6 @@ function SlotCard({ slot }: { slot: Slot }) {
       <span className="timetable__time">
         {set.debut}–{set.fin}
       </span>
-      <SetBadge status={status} />
     </Link>
   );
 }
@@ -91,20 +89,22 @@ export function Day() {
   const totalMin = Math.ceil((endMs - startMs) / MS_PER_MIN);
   const hours = buildHourMarks(startMs, endMs);
 
+  const nowMs = now.getTime();
   const slots: Slot[] = day.sets.map((set) => {
+    const startTs = setStart(set).getTime();
+    const endTs = setEnd(set).getTime();
     const column = SCENES.indexOf(set.scene as (typeof SCENES)[number]) + 2;
-    const startRow =
-      Math.round((setStart(set).getTime() - startMs) / MS_PER_MIN) + 1;
-    const endRow =
-      Math.round((setEnd(set).getTime() - startMs) / MS_PER_MIN) + 1;
-    return {
-      set,
-      status: getSetStatus(set, now),
-      column,
-      startRow,
-      endRow,
-    };
+    const startRow = Math.round((startTs - startMs) / MS_PER_MIN) + 1;
+    const endRow = Math.round((endTs - startMs) / MS_PER_MIN) + 1;
+    let state: SlotState = "future";
+    if (nowMs >= endTs) state = "past";
+    else if (nowMs >= startTs) state = "live";
+    return { set, state, column, startRow, endRow };
   });
+
+  const nowMin = (nowMs - startMs) / MS_PER_MIN;
+  const showNow = nowMin >= 0 && nowMin <= totalMin;
+  const nowRow = Math.max(1, Math.round(nowMin) + 1);
 
   const bodyStyle = { "--rows": totalMin } as React.CSSProperties;
 
@@ -139,6 +139,13 @@ export function Day() {
           {slots.map((slot) => (
             <SlotCard key={slot.set.artiste} slot={slot} />
           ))}
+          {showNow && (
+            <div
+              className="timetable__now"
+              style={{ gridRow: nowRow }}
+              aria-hidden
+            />
+          )}
         </div>
       </div>
     </div>

@@ -305,12 +305,20 @@ ul {
 }
 
 .timetable__slot--live {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  background: #1d1d1d;
 }
 
-.timetable__slot--soon {
-  border-color: rgba(234, 179, 8, 0.5);
+.timetable__now {
+  grid-column: 2 / -1;
+  align-self: start;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--accent);
+  border-radius: 1px;
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(163, 230, 53, 0.45);
 }
 
 .timetable__slot .badge {
