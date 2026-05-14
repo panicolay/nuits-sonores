@@ -8,14 +8,17 @@ import {
 } from "../data/programme";
 import { getGenreDescription } from "../data/genres";
 import { useNow } from "../data/now";
+import { useFavorites } from "../data/favorites";
 import { SetBadge } from "../components/SetBadge";
 import { PickMark } from "../components/PickMark";
+import { FavoriteMark } from "../components/FavoriteMark";
 import type { FilterType } from "../data/types";
 
 export function Filter() {
   const { type, slug } = useParams();
   const filterType = type as FilterType;
   const now = useNow();
+  const favorites = useFavorites();
 
   if (filterType !== "genre" && filterType !== "mood") {
     return <NotMatched />;
@@ -69,6 +72,7 @@ export function Filter() {
                       <span className="filter__name">
                         {set.artiste}
                         {set.incontournable && <PickMark />}
+                        {favorites.has(slugify(set.artiste)) && <FavoriteMark />}
                       </span>
                       <SetBadge status={status} />
                     </span>

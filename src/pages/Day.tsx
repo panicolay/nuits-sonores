@@ -9,7 +9,9 @@ import {
   slugify,
 } from "../data/programme";
 import { useNow } from "../data/now";
+import { useFavorites } from "../data/favorites";
 import { PickMark } from "../components/PickMark";
+import { FavoriteMark } from "../components/FavoriteMark";
 
 const MS_PER_MIN = 60_000;
 
@@ -51,7 +53,7 @@ function buildHourMarks(startMs: number, endMs: number): HourMark[] {
   return marks;
 }
 
-function SlotCard({ slot }: { slot: Slot }) {
+function SlotCard({ slot, fav }: { slot: Slot; fav: boolean }) {
   const { set, state, column, startRow, endRow } = slot;
   const className = [
     "timetable__slot",
@@ -60,6 +62,7 @@ function SlotCard({ slot }: { slot: Slot }) {
   ]
     .filter(Boolean)
     .join(" ");
+  const hasMarks = set.incontournable || fav;
   return (
     <Link
       to={`/artiste/${slugify(set.artiste)}`}
@@ -67,7 +70,12 @@ function SlotCard({ slot }: { slot: Slot }) {
       style={{ gridColumn: column, gridRow: `${startRow} / ${endRow}` }}
     >
       <span className="timetable__name">{set.artiste}</span>
-      {set.incontournable && <PickMark />}
+      {hasMarks && (
+        <span className="timetable__marks">
+          {set.incontournable && <PickMark />}
+          {fav && <FavoriteMark />}
+        </span>
+      )}
     </Link>
   );
 }
@@ -76,6 +84,7 @@ export function Day() {
   const { dayId } = useParams();
   const day = dayId ? getDay(dayId) : undefined;
   const now = useNow();
+  const favorites = useFavorites();
 
   if (!day) {
     return (
@@ -143,7 +152,11 @@ export function Day() {
             </Fragment>
           ))}
           {slots.map((slot) => (
-            <SlotCard key={slot.set.artiste} slot={slot} />
+            <SlotCard
+              key={slot.set.artiste}
+              slot={slot}
+              fav={favorites.has(slugify(slot.set.artiste))}
+            />
           ))}
           {showNow && (
             <div

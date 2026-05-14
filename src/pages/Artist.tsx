@@ -1,13 +1,15 @@
 import { Link, useParams } from "react-router-dom";
-import { Smiley } from "@phosphor-icons/react";
+import { Heart, Smiley } from "@phosphor-icons/react";
 import { days, getArtistBySlug, getSetStatus, slugify } from "../data/programme";
 import { useNow } from "../data/now";
+import { toggleFavorite, useFavorites } from "../data/favorites";
 import { SetBadge } from "../components/SetBadge";
 
 export function Artist() {
   const { slug } = useParams();
   const set = slug ? getArtistBySlug(slug) : undefined;
   const now = useNow();
+  const favorites = useFavorites();
 
   if (!set) {
     return (
@@ -20,6 +22,8 @@ export function Artist() {
 
   const status = getSetStatus(set, now);
   const day = days.find((d) => d.date === set.date)!;
+  const artistSlug = slugify(set.artiste);
+  const fav = favorites.has(artistSlug);
 
   return (
     <article className="artist">
@@ -34,7 +38,24 @@ export function Artist() {
             {set.scene}
           </Link>
         </p>
-        <SetBadge status={status} />
+        <div className="artist__actions">
+          <SetBadge status={status} />
+          <button
+            type="button"
+            className={`artist__favorite${fav ? " is-on" : ""}`}
+            onClick={() => toggleFavorite(artistSlug)}
+            aria-pressed={fav}
+            aria-label={fav ? "Retirer des favoris" : "Ajouter aux favoris"}
+          >
+            <Heart
+              size={18}
+              weight={fav ? "fill" : "regular"}
+              color="var(--accent-pink)"
+              aria-hidden
+            />
+            <span>{fav ? "Favori" : "Ajouter aux favoris"}</span>
+          </button>
+        </div>
       </header>
 
       <p className="artist__description">{set.description}</p>
