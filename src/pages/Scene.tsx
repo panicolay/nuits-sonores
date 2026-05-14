@@ -37,23 +37,29 @@ export function Scene() {
         <section key={day.dayId} className="scene__day">
           <h2>{day.label}</h2>
           <ul className="scene__list">
-            {day.sets.map(({ set, status }) => (
-              <li key={set.artiste}>
-                <Link to={`/artiste/${slugify(set.artiste)}`}>
-                  <span className="scene__time">
-                    {set.debut}–{set.fin}
-                  </span>
-                  <span className="scene__artist">
-                    <span className="scene__name">
-                      {set.artiste}
-                      {set.incontournable && <PickMark />}
-                      {favorites.has(slugify(set.artiste)) && <FavoriteMark />}
+            {day.sets.map(({ set, status }) => {
+              const isFav = favorites.has(slugify(set.artiste));
+              const hasMarks = set.incontournable || isFav;
+              return (
+                <li key={set.artiste}>
+                  <Link to={`/artiste/${slugify(set.artiste)}`}>
+                    <span className="scene__time">
+                      {set.debut}–{set.fin}
                     </span>
-                    <SetBadge status={status} />
-                  </span>
-                </Link>
-              </li>
-            ))}
+                    <span className="scene__artist">
+                      <span className="scene__name">{set.artiste}</span>
+                      {hasMarks && (
+                        <span className="scene__marks">
+                          {set.incontournable && <PickMark size={16} />}
+                          {isFav && <FavoriteMark size={16} />}
+                        </span>
+                      )}
+                      <SetBadge status={status} />
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))}

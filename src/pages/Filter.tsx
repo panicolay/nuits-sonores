@@ -61,24 +61,30 @@ export function Filter() {
           <section key={day.dayId} className="filter__day">
             <h2>{day.label}</h2>
             <ul className="filter__list">
-              {day.sets.map(({ set, status }) => (
-                <li key={set.artiste}>
-                  <Link to={`/artiste/${slugify(set.artiste)}`}>
-                    <span className="filter__time">
-                      {set.debut}–{set.fin}
-                    </span>
-                    <span className="filter__scene">{set.scene}</span>
-                    <span className="filter__artist">
-                      <span className="filter__name">
-                        {set.artiste}
-                        {set.incontournable && <PickMark />}
-                        {favorites.has(slugify(set.artiste)) && <FavoriteMark />}
+              {day.sets.map(({ set, status }) => {
+                const isFav = favorites.has(slugify(set.artiste));
+                const hasMarks = set.incontournable || isFav;
+                return (
+                  <li key={set.artiste}>
+                    <Link to={`/artiste/${slugify(set.artiste)}`}>
+                      <span className="filter__time">
+                        {set.debut}–{set.fin}
                       </span>
-                      <SetBadge status={status} />
-                    </span>
-                  </Link>
-                </li>
-              ))}
+                      <span className="filter__scene">{set.scene}</span>
+                      <span className="filter__artist">
+                        <span className="filter__name">{set.artiste}</span>
+                        {hasMarks && (
+                          <span className="filter__marks">
+                            {set.incontournable && <PickMark size={16} />}
+                            {isFav && <FavoriteMark size={16} />}
+                          </span>
+                        )}
+                        <SetBadge status={status} />
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         ))
