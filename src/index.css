@@ -101,8 +101,8 @@ ul {
 /* FAB */
 .fab {
   position: fixed;
-  bottom: 1.25rem;
-  right: 1.25rem;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  right: max(1.25rem, env(safe-area-inset-right, 0px));
   z-index: 30;
   width: 3.5rem;
   height: 3.5rem;
@@ -175,8 +175,8 @@ ul {
 
 .fab__menu {
   position: fixed;
-  bottom: 5.5rem;
-  right: 1.25rem;
+  bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  right: max(1.25rem, env(safe-area-inset-right, 0px));
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -491,7 +491,7 @@ ul {
 .artist__pick {
   display: flex;
   gap: 0.625rem;
-  align-items: baseline;
+  align-items: flex-start;
   margin: 0 0 2rem;
   padding: 0.875rem 1rem;
   background: var(--accent-soft);
@@ -500,7 +500,7 @@ ul {
 
 .artist__pick-mark {
   flex: none;
-  align-self: center;
+  margin-top: 0.25rem;
 }
 
 .artist__pick-text {
