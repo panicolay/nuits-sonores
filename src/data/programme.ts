@@ -10,7 +10,7 @@ import type {
 
 export const programme: ArtistSet[] = raw as ArtistSet[];
 
-export const SCENES = ["Nef", "Soundsystem", "Outdoor", "Darse"] as const;
+export const SCENES = ["Outdoor", "Nef", "Soundsystem", "Darse"] as const;
 
 export function slugify(value: string): string {
   return value
