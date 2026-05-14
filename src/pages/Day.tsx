@@ -13,6 +13,13 @@ import { PickMark } from "../components/PickMark";
 
 const MS_PER_MIN = 60_000;
 
+const SCENE_TRIGRAMS: Record<string, string> = {
+  Outdoor: "OUT",
+  Nef: "NEF",
+  Soundsystem: "SND",
+  Darse: "DAR",
+};
+
 type SlotState = "past" | "live" | "future";
 
 type Slot = {
@@ -115,8 +122,12 @@ export function Day() {
         <div className="timetable__head">
           <div className="timetable__corner" aria-hidden />
           {SCENES.map((scene) => (
-            <div key={scene} className="timetable__scene-head">
-              {scene}
+            <div
+              key={scene}
+              className="timetable__scene-head"
+              title={scene}
+            >
+              {SCENE_TRIGRAMS[scene] ?? scene}
             </div>
           ))}
         </div>
