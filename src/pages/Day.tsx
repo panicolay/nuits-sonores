@@ -38,7 +38,7 @@ function buildHourMarks(startMs: number, endMs: number): HourMark[] {
     const hour = d.getHours();
     marks.push({
       row: Math.round((t - startMs) / MS_PER_MIN) + 1,
-      label: `${hour.toString().padStart(2, "0")}h`,
+      label: hour.toString().padStart(2, "0"),
     });
   }
   return marks;
