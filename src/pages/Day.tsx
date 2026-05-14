@@ -66,10 +66,8 @@ function SlotCard({ slot }: { slot: Slot }) {
       className={className}
       style={{ gridColumn: column, gridRow: `${startRow} / ${endRow}` }}
     >
-      <span className="timetable__name">
-        {set.artiste}
-        {set.incontournable && <PickMark />}
-      </span>
+      {set.incontournable && <PickMark />}
+      <span className="timetable__name">{set.artiste}</span>
       <span className="timetable__time">
         {set.debut}–{set.fin}
       </span>

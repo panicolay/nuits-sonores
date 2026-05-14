@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { Smiley } from "@phosphor-icons/react";
 import { days, getArtistBySlug, getSetStatus, slugify } from "../data/programme";
 import { useNow } from "../data/now";
 import { SetBadge } from "../components/SetBadge";
@@ -40,7 +41,13 @@ export function Artist() {
 
       {set.incontournable && (
         <aside className="artist__pick" aria-label="Incontournable">
-          <span className="artist__pick-mark" aria-hidden>※</span>
+          <Smiley
+            size={16}
+            weight="regular"
+            color="var(--accent)"
+            className="artist__pick-mark"
+            aria-hidden
+          />
           <p className="artist__pick-text">{set.incontournable}</p>
         </aside>
       )}
