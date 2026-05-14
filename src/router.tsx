@@ -7,6 +7,7 @@ import { DiscoverGenres } from "./pages/DiscoverGenres";
 import { DiscoverMoods } from "./pages/DiscoverMoods";
 import { Filter } from "./pages/Filter";
 import { Scene } from "./pages/Scene";
+import { Debug } from "./pages/Debug";
 import { NotFound } from "./pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       { path: "/decouvrir/moods", element: <DiscoverMoods /> },
       { path: "/scene/:slug", element: <Scene /> },
       { path: "/filtre/:type/:slug", element: <Filter /> },
+      { path: "/debug", element: <Debug /> },
       { path: "*", element: <NotFound /> },
     ],
   },

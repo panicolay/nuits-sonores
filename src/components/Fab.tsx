@@ -14,6 +14,7 @@ const SECTIONS: FabItem[][] = [
     { to: "/decouvrir/moods", label: "Moods" },
     { to: "/decouvrir/genres", label: "Genres" },
   ],
+  [{ to: "/debug", label: "Debug" }],
 ];
 
 export function Fab() {
