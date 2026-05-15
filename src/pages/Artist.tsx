@@ -83,7 +83,7 @@ export function Artist() {
           <Smiley
             size={16}
             weight="regular"
-            color="var(--accent)"
+            color="var(--pick)"
             className="artist__pick-mark"
             aria-hidden
           />
