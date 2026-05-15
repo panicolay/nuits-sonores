@@ -91,6 +91,10 @@ ul {
   padding: calc(0.875rem + env(safe-area-inset-top, 0px))
     max(1.25rem, env(safe-area-inset-right, 0px)) 0.875rem
     max(1.25rem, env(safe-area-inset-left, 0px));
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
 }
 
 .header__logo {
@@ -98,6 +102,22 @@ ul {
   font-size: 1rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  flex: 0 0 auto;
+}
+
+.header__separator {
+  color: var(--border);
+  flex: 0 0 auto;
+}
+
+.header__title {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* FAB */

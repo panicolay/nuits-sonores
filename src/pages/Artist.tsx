@@ -5,12 +5,15 @@ import { useNow } from "../data/now";
 import { toggleFavorite, useFavorites } from "../data/favorites";
 import { downloadICS } from "../data/calendar";
 import { SetBadge } from "../components/SetBadge";
+import { usePageTitle } from "../components/PageTitle";
 
 export function Artist() {
   const { slug } = useParams();
   const set = slug ? getArtistBySlug(slug) : undefined;
   const now = useNow();
   const favorites = useFavorites();
+
+  usePageTitle(set ? set.artiste : "Artiste introuvable");
 
   if (!set) {
     return (

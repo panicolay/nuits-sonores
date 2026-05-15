@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDebugNow, setDebugNow, useNow } from "../data/now";
 import { forceReload } from "../pwa";
+import { usePageTitle } from "../components/PageTitle";
 
 function toLocalInput(date: Date): string {
   const pad = (n: number) => n.toString().padStart(2, "0");
@@ -16,6 +17,8 @@ export function Debug() {
   const [value, setValue] = useState(() => toLocalInput(now));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  usePageTitle("Debug");
 
   useEffect(() => {
     if (!overridden) setValue(toLocalInput(now));

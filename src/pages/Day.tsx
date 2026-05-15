@@ -12,6 +12,7 @@ import { useNow } from "../data/now";
 import { useFavorites } from "../data/favorites";
 import { PickMark } from "../components/PickMark";
 import { FavoriteMark } from "../components/FavoriteMark";
+import { usePageTitle } from "../components/PageTitle";
 
 const MS_PER_MIN = 60_000;
 
@@ -85,6 +86,8 @@ export function Day() {
   const day = dayId ? getDay(dayId) : undefined;
   const now = useNow();
   const favorites = useFavorites();
+
+  usePageTitle(day ? day.label : "Jour introuvable");
 
   if (!day) {
     return (
