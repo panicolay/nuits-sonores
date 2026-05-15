@@ -505,12 +505,6 @@ ul {
   border-color: var(--accent-pink);
 }
 
-.artist__favorite.is-on {
-  background: var(--accent-pink-soft);
-  border-color: var(--accent-pink);
-  color: var(--accent-pink);
-}
-
 .artist__calendar:hover {
   border-color: var(--accent);
 }
