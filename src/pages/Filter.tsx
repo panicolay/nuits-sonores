@@ -46,9 +46,6 @@ export function Filter() {
 
   return (
     <div className="filter">
-      <p className="filter__type">
-        {filterType === "genre" ? "Genre" : "Mood"}
-      </p>
       {description && <GenreDescription text={description} />}
       <p className="filter__count">
         {upcomingCount} artiste{upcomingCount > 1 ? "s" : ""} à venir
