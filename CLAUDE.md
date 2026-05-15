@@ -46,3 +46,12 @@ Pas de state management, pas de fetch réseau, pas d'API : tout est synchrone et
 
 - Code et commentaires en anglais ; libellés UI et routes en français (cf. instructions globales)
 - Préférer enrichir `programme.json` plutôt que de hardcoder du contenu dans les composants
+
+## Workflow Git
+
+Une fois la tâche terminée, poussée sur la branche de feature et validée (build OK), **merger automatiquement sur `main`** via les outils GitHub MCP, sans redemander confirmation :
+
+1. `mcp__github__create_pull_request` — base `main`, head = branche courante
+2. `mcp__github__merge_pull_request` — `merge_method: "squash"` (cohérent avec l'historique du repo)
+
+Ne pas pousser de force ni merger si le build casse.
