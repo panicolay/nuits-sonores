@@ -5,7 +5,7 @@ export function PickMark({ size = 12 }: { size?: number }) {
     <Smiley
       size={size}
       weight="regular"
-      color="var(--pick)"
+      color="var(--accent)"
       className="pick-mark"
       aria-label="Incontournable"
     />
