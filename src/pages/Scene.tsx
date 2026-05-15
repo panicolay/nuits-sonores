@@ -18,7 +18,6 @@ export function Scene() {
   if (!scene) {
     return (
       <div>
-        <h1>Scène introuvable</h1>
         <Link to="/">Retour à l'accueil</Link>
       </div>
     );
@@ -35,7 +34,6 @@ export function Scene() {
 
   return (
     <div className="scene">
-      <h1>{scene.value}</h1>
       {days.map((day) => (
         <section key={day.dayId} className="scene__day">
           <h2>{day.label}</h2>

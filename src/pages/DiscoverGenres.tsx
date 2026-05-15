@@ -11,7 +11,6 @@ export function DiscoverGenres() {
 
   return (
     <div className="discover">
-      <h1>Genres</h1>
       {groups.length === 0 ? (
         <p className="filter__empty">Tous les sets sont terminés.</p>
       ) : (

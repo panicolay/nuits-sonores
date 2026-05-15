@@ -45,8 +45,6 @@ export function Debug() {
 
   return (
     <div className="debug-page">
-      <h1>Debug</h1>
-
       <section className="debug-page__section">
         <h2 className="debug-page__section-title">Heure simulée</h2>
         <div className="debug-page__status">

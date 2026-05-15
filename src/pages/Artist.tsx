@@ -18,7 +18,6 @@ export function Artist() {
   if (!set) {
     return (
       <div>
-        <h1>Artiste introuvable</h1>
         <Link to="/">Retour à l'accueil</Link>
       </div>
     );
@@ -32,7 +31,6 @@ export function Artist() {
   return (
     <article className="artist">
       <header>
-        <h1>{set.artiste}</h1>
         <p className="artist__meta">
           <Link to={`/jour/${day.id}`} className="artist__meta-link">
             {day.label} {set.debut}–{set.fin}

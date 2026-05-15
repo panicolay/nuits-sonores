@@ -92,7 +92,6 @@ export function Day() {
   if (!day) {
     return (
       <div>
-        <h1>Jour introuvable</h1>
         <Link to="/">Retour à l'accueil</Link>
       </div>
     );
@@ -124,7 +123,6 @@ export function Day() {
 
   return (
     <div className="day">
-      <h1>{day.label}</h1>
       <div className="timetable">
         <div className="timetable__head">
           <div className="timetable__corner" aria-hidden />

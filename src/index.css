@@ -237,10 +237,6 @@ ul {
 }
 
 /* Day timetable */
-.day h1 {
-  margin-bottom: 1rem;
-}
-
 .timetable {
   --gutter: 1.5rem;
   --col-gap: 0.25rem;
@@ -602,10 +598,6 @@ ul {
 }
 
 /* Discover */
-.discover h1 {
-  margin-bottom: 1.75rem;
-}
-
 .discover__group {
   margin-bottom: 2rem;
 }
