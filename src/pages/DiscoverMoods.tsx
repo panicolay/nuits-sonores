@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { getUpcomingMoods } from "../data/programme";
 import { useNow } from "../data/now";
+import { usePageTitle } from "../components/PageTitle";
 
 export function DiscoverMoods() {
   const now = useNow();
   const moods = getUpcomingMoods(now);
+
+  usePageTitle("Moods");
 
   return (
     <div className="discover">

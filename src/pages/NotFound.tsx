@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { usePageTitle } from "../components/PageTitle";
 
 export function NotFound() {
+  usePageTitle("Page introuvable");
   return (
     <div>
       <h1>Page introuvable</h1>

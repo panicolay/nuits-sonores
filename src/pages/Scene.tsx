@@ -5,12 +5,15 @@ import { useFavorites } from "../data/favorites";
 import { SetBadge } from "../components/SetBadge";
 import { PickMark } from "../components/PickMark";
 import { FavoriteMark } from "../components/FavoriteMark";
+import { usePageTitle } from "../components/PageTitle";
 
 export function Scene() {
   const { slug } = useParams();
   const scene = slug ? getScene(slug) : undefined;
   const now = useNow();
   const favorites = useFavorites();
+
+  usePageTitle(scene ? scene.value : "Scène introuvable");
 
   if (!scene) {
     return (

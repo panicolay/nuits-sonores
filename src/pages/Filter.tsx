@@ -12,6 +12,7 @@ import { useFavorites } from "../data/favorites";
 import { SetBadge } from "../components/SetBadge";
 import { PickMark } from "../components/PickMark";
 import { FavoriteMark } from "../components/FavoriteMark";
+import { usePageTitle } from "../components/PageTitle";
 import type { FilterType } from "../data/types";
 
 export function Filter() {
@@ -20,16 +21,15 @@ export function Filter() {
   const now = useNow();
   const favorites = useFavorites();
 
-  if (filterType !== "genre" && filterType !== "mood") {
-    return <NotMatched />;
-  }
-
-  const label = slug ? getFilterLabel(filterType, slug) : undefined;
-  const rawDays = slug ? getFilterDays(filterType, slug) : [];
+  const isValidType = filterType === "genre" || filterType === "mood";
+  const label = isValidType && slug ? getFilterLabel(filterType, slug) : undefined;
+  const rawDays = isValidType && slug ? getFilterDays(filterType, slug) : [];
   const description =
     filterType === "genre" && slug ? getGenreDescription(slug) : undefined;
 
-  if (!label || rawDays.length === 0) {
+  usePageTitle(label ?? "Filtre introuvable");
+
+  if (!isValidType || !label || rawDays.length === 0) {
     return <NotMatched />;
   }
 

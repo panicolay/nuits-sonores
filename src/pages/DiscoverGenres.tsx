@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { getUpcomingGenresByGroup } from "../data/programme";
 import { useNow } from "../data/now";
+import { usePageTitle } from "../components/PageTitle";
 
 export function DiscoverGenres() {
   const now = useNow();
   const groups = getUpcomingGenresByGroup(now);
+
+  usePageTitle("Genres");
 
   return (
     <div className="discover">
