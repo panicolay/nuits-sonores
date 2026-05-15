@@ -11,7 +11,6 @@ export function DiscoverMoods() {
 
   return (
     <div className="discover">
-      <h1>Moods</h1>
       {moods.length === 0 ? (
         <p className="filter__empty">Tous les sets sont terminés.</p>
       ) : (
